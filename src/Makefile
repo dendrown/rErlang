@@ -1,6 +1,7 @@
 .SUFFIXES: .erl .beam .yrl
 
 BINDIR :=../bin
+LIB_BIN_DIR := ${BINDIR}/lib/rErlang/bin
 R_INCLUDE_DIR := /usr/lib/R/include
 ERL_BASE := /usr/lib/erlang/lib/erl_interface-3.9.3
 R_HOME := /usr/lib/R
@@ -12,6 +13,8 @@ CSRC=$(shell ls *.c)
 HED=$(shell ls *.h)
 CC := gcc
 RM := rm
+MD := mkdir -p
+LN := ln -s
 MODS = eri
 VERSION := 0.1
 PRODUCT_ERI := ERI-${VERSION}
@@ -29,6 +32,8 @@ eri:	${HED} ${CSRC}
 	${CC} -std=gnu99 ${CFLAGS} -fpic  -g -O2 -c rErlang.c -o ${BINDIR}/${PRODUCT_RE}.o
 	${CC} -std=gnu99 -shared  -o ${BINDIR}/${PRODUCT_RE}.so ${BINDIR}/${PRODUCT_RE}.o ${LFLAGS}
 	cp ${NODE_SHELL} ${R_FILE} ${BINDIR}
+	${MD} ${LIB_BIN_DIR}
+	${LN} ../../../${PRODUCT_ERI} ${LIB_BIN_DIR}/${PRODUCT_ERI}
 
 clean:
-	${RM} -rf ${BINDIR}/${R_FILE} ${BINDIR}/${PRODUCT_ERI} ${BINDIR}/${PRODUCT_RE} ${BINDIR}/*.beam ${BINDIR}/*.sh ${BINDIR}/*.o ${BINDIR}/*.so *~ *# *.o *.so
+	${RM} -rf ${BINDIR}/${R_FILE} ${BINDIR}/${PRODUCT_ERI} ${BINDIR}/${PRODUCT_RE} ${BINDIR}/lib ${BINDIR}/*.beam ${BINDIR}/*.sh ${BINDIR}/*.o ${BINDIR}/*.so *~ *# *.o *.so
