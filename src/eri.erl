@@ -1,7 +1,7 @@
 -module(eri).
 
 % API
--export([start/0, start/1, stop/0,init/1]).
+-export([start/0, start/1, stop/0, init/1]).
 -export([connect/0, parse/1, eval/1, sum/2]).
 
 
@@ -13,7 +13,7 @@ start()->
 				SensorPath--"\n"
 		  end,
 		  erlang:display(Path),
-    erlang:load_nif(Path ++ "/priv/rErlang", 0).
+    start(Path ++ "/priv/ERI-0.1").
 
 start(ExtPrg) ->
     register(?MODULE, spawn_link(?MODULE, init, [ExtPrg])).
