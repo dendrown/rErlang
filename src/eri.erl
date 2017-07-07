@@ -13,9 +13,11 @@ start()->
 				SensorPath--"\n"
 		  end,
 		  erlang:display(Path),
-    start(Path++"/lib/rErlang/bin/ERI-0.1").
+    erlang:load_nif(Path ++ "/priv/rErlang", 0).
+
 start(ExtPrg) ->
     register(?MODULE, spawn_link(?MODULE, init, [ExtPrg])).
+
 
 stop() ->
     case call_port({stop}) of 
