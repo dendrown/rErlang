@@ -6,14 +6,7 @@
 
 
 start()->	
-	Path = case os:cmd("echo $SENSOR_PATH") of
-			"\n" -> 
-				".";
-			SensorPath ->
-				SensorPath--"\n"
-		  end,
-		  erlang:display(Path),
-    start(Path ++ "/priv/ERI-0.1").
+    start(code:priv_dir(rErlang) ++ "/ERI-0.1").
 
 start(ExtPrg) ->
     register(?MODULE, spawn_link(?MODULE, init, [ExtPrg])).
